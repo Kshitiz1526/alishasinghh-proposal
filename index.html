@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Alisha — from Kshitiz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Dancing+Script:wght@500;700&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+
+:root{
+  --ivory: #FBF3E8;
+  --ivory-deep: #F1E4D2;
+  --gold: #B8863B;
+  --gold-light: #E7C989;
+  --plum: #4A1030;
+  --plum-deep: #2E091E;
+  --rose: #D98E9B;
+  --ink: #3a2418;
+  --display: 'Cormorant Garamond', serif;
+  --script: 'Dancing Script', cursive;
+  --body: 'Work Sans', sans-serif;
+}
+
+*{ margin:0; padding:0; box-sizing:border-box; }
+html{ scroll-behavior:smooth; }
+body{
+  font-family: var(--body);
+  background: var(--ivory);
+  color: var(--ink);
+  overflow-x:hidden;
+}
+::selection{ background: var(--gold-light); color: var(--plum-deep); }
+
+/* ============ ENVELOPE GATE ============ */
+.gate{
+  position:fixed; inset:0; z-index:100;
+  background: radial-gradient(circle at 50% 30%, var(--plum) 0%, var(--plum-deep) 70%);
+  display:flex; align-items:center; justify-content:center;
+  transition: opacity 1s ease, visibility 1s ease;
+}
+.gate.opened{ opacity:0; visibility:hidden; pointer-events:none; }
+
+.envelope-wrap{ text-align:center; }
+.envelope-wrap p{
+  font-family: var(--script);
+  color: var(--gold-light);
+  font-size: 1.4rem;
+  margin-bottom: 1.6rem;
+  opacity:.9;
+}
+.envelope{
+  width: 260px; height: 180px;
+  position:relative;
+  margin: 0 auto;
+  cursor:pointer;
+  filter: drop-shadow(0 20px 40px rgba(0,0,0,.45));
+}
+.envelope .body{
+  position:absolute; inset:0;
+  background: var(--ivory-deep);
+  border-radius: 4px;
+}
+.envelope .flap{
+  position:absolute; top:0; left:0; width:100%; height:100%;
+  clip-path: polygon(0 0, 100% 0, 50% 58%);
+  background: var(--ivory);
+  border-radius: 4px 4px 0 0;
+  transform-origin: top;
+  transition: transform .9s cubic-bezier(.6,.1,.3,1);
+  z-index:3;
+}
+.envelope .fold-l{
+  position:absolute; bottom:0; left:0; width:0; height:0;
+  border-left: 130px solid var(--ivory-deep);
+  border-bottom: 180px solid transparent;
+  opacity: .5;
+}
+.envelope .fold-r{
+  position:absolute; bottom:0; right:0; width:0; height:0;
+  border-right: 130px solid var(--ivory-deep);
+  border-bottom: 180px solid transparent;
+  opacity: .5;
+}
+.envelope .seal{
+  position:absolute; top:50%; left:50%; transform: translate(-50%,-50%);
+  width: 56px; height:56px; border-radius:50%;
+  background: radial-gradient(circle at 35% 30%, #b5442e, #7c2418 75%);
+  z-index:4;
+  display:flex; align-items:center; justify-content:center;
+  font-family: var(--script);
+  color: var(--gold-light);
+  font-size: 1.1rem;
+  box-shadow: 0 6px 14px rgba(0,0,0,.5);
+  transition: transform .4s ease, opacity .4s ease;
+}
+.envelope:hover .seal{ transform: translate(-50%,-50%) scale(1.06); }
+.envelope.open .flap{ transform: rotateX(180deg); }
+.envelope.open .seal{ opacity:0; transform: translate(-50%,-50%) scale(0); }
+
+.gate-hint{
+  margin-top: 1.8rem;
+  font-size: .72rem;
+  letter-spacing: .3em;
+  text-transform: uppercase;
+  color: var(--gold);
+  opacity:.75;
+}
+
+/* ============ MAIN SITE ============ */
+main{
+  opacity:0;
+  transition: opacity 1.2s ease;
+}
+main.show{ opacity:1; }
+
+.eyebrow{
+  font-family: var(--body);
+  letter-spacing: .32em;
+  text-transform: uppercase;
+  font-size: .68rem;
+  font-weight: 500;
+  color: var(--gold);
+}
+
+/* ---------- HERO ---------- */
+.hero{
+  position:relative; min-height:100vh;
+  display:flex; align-items:center; justify-content:center;
+  padding: 6vh 6vw;
+  background: var(--ivory);
+}
+.card{
+  position:relative;
+  max-width: 900px; width:100%;
+  border: 1px solid var(--gold-light);
+  padding: clamp(2rem, 5vw, 4rem);
+  text-align:center;
+  background:
+    radial-gradient(circle at 15% 10%, rgba(184,134,59,.08), transparent 40%),
+    radial-gradient(circle at 85% 90%, rgba(74,16,48,.06), transparent 40%);
+}
+.card::before, .card::after{
+  content:''; position:absolute; width: 34px; height:34px;
+  border: 1px solid var(--gold);
+}
+.card::before{ top:-1px; left:-1px; border-right:none; border-bottom:none; }
+.card::after{ bottom:-1px; right:-1px; border-left:none; border-top:none; }
+
+.hero-frame{
+  width: 220px; height:220px; border-radius:50%;
+  overflow:hidden; margin: 0 auto 2rem;
+  border: 3px solid var(--gold-light);
+  box-shadow: 0 20px 40px -14px rgba(74,16,48,.35);
+}
+.hero-frame img{ width:100%; height:100%; object-fit:cover; object-position: 50% 20%; }
+
+.hero h1{
+  font-family: var(--script);
+  font-size: clamp(3rem, 8vw, 5rem);
+  color: var(--plum);
+  line-height: 1;
+}
+.hero .amp{
+  display:block;
+  font-family: var(--display);
+  font-style: italic;
+  font-size: 1.1rem;
+  color: var(--gold);
+  margin: .6rem 0;
+}
+.hero p.tag{
+  font-family: var(--display);
+  font-style: italic;
+  font-size: clamp(1.1rem, 2vw, 1.4rem);
+  color: #6b4a3a;
+  max-width: 40ch;
+  margin: 1.2rem auto 0;
+}
+.scroll-hint{
+  margin-top: 2.6rem; font-size: .7rem; letter-spacing:.25em; text-transform: uppercase;
+  color: var(--gold); opacity:.7;
+}
+
+/* ---------- LETTER ---------- */
+.letter{
+  padding: 8rem 6vw;
+  background: var(--plum-deep);
+  color: var(--ivory);
+  display:grid; grid-template-columns: .9fr 1.1fr; gap: 5vw; align-items:center;
+}
+.letter .eyebrow{ color: var(--gold-light); margin-bottom: 1.2rem; }
+.letter-portrait{ position:relative; }
+.letter-portrait img{
+  width:100%; display:block; border-radius: 2px;
+  box-shadow: 0 30px 60px -18px rgba(0,0,0,.6);
+  border: 1px solid rgba(231,201,137,.3);
+}
+.letter-portrait figcaption{
+  margin-top: 1rem; font-family: var(--script); font-size: 1.6rem; color: var(--gold-light);
+}
+.letter-body h2{
+  font-family: var(--display); font-style: italic; font-weight: 500;
+  font-size: clamp(1.7rem, 3.2vw, 2.4rem);
+  color: var(--ivory);
+  line-height: 1.3;
+  margin-bottom: 1.6rem;
+}
+.letter-body p{
+  font-family: var(--body); font-weight: 300;
+  font-size: 1.02rem; line-height: 1.9;
+  color: #e7d8c9;
+  max-width: 48ch;
+  margin-bottom: 1.2rem;
+}
+.letter-body .sign{
+  margin-top: 1.6rem; font-family: var(--script); font-size: 2rem; color: var(--gold-light);
+}
+
+/* ---------- GARLAND GALLERY ---------- */
+.garland-section{
+  padding: 8rem 6vw 10rem;
+  background: var(--ivory);
+  text-align:center;
+  position:relative;
+}
+.garland-section .eyebrow{ color: var(--gold); }
+.garland-section h2{
+  font-family: var(--display); font-style: italic; font-weight:500;
+  font-size: clamp(2rem, 4vw, 2.8rem);
+  color: var(--plum);
+  margin-top: .8rem;
+  margin-bottom: 5rem;
+}
+.strings{
+  display:flex; justify-content:center; gap: 4vw; flex-wrap:wrap;
+}
+.string{
+  display:flex; flex-direction:column; align-items:center;
+  position:relative;
+}
+.string::before{
+  content:''; width:1px; height: 60px; background: var(--gold);
+  opacity:.5;
+}
+.medallion{
+  width: 170px; height:170px; border-radius:50%;
+  border: 4px solid var(--ivory);
+  outline: 1px solid var(--gold-light);
+  overflow:hidden;
+  box-shadow: 0 18px 30px -12px rgba(74,16,48,.3);
+  margin-top: -2px;
+  transition: transform .35s ease;
+}
+.medallion:hover{ transform: translateY(-6px) scale(1.04); }
+.medallion img{ width:100%; height:100%; object-fit:cover; }
+.string span{
+  margin-top: 1rem;
+  font-family: var(--script);
+  font-size: 1.3rem;
+  color: var(--plum);
+}
+.string:nth-child(2){ margin-top: 3rem; }
+.string:nth-child(4){ margin-top: 1.6rem; }
+
+/* ---------- PROPOSAL (RING BOX) ---------- */
+.proposal{
+  min-height: 100vh;
+  display:flex; align-items:center; justify-content:center;
+  text-align:center;
+  padding: 8rem 6vw;
+  background: linear-gradient(180deg, var(--plum-deep), var(--plum) 60%, var(--plum-deep));
+  color: var(--ivory);
+  position:relative;
+  overflow:hidden;
+}
+.proposal-inner{ max-width: 620px; position:relative; z-index:2; }
+.proposal .eyebrow{ color: var(--gold-light); margin-bottom: 1.4rem; }
+
+.ringbox{
+  width: 130px; height: 100px;
+  margin: 0 auto 2.4rem;
+  position:relative;
+  cursor:pointer;
+}
+.ringbox .lid{
+  position:absolute; top:0; left:0; width:100%; height:46px;
+  background: linear-gradient(160deg, var(--gold-light), var(--gold));
+  border-radius: 8px 8px 0 0;
+  transform-origin: bottom;
+  transition: transform .7s cubic-bezier(.5,-.2,.3,1.3);
+  box-shadow: 0 4px 10px rgba(0,0,0,.3);
+  z-index:2;
+}
+.ringbox .base{
+  position:absolute; bottom:0; left:0; width:100%; height:60px;
+  background: linear-gradient(160deg, #7c5320, #4c3110);
+  border-radius: 0 0 8px 8px;
+}
+.ringbox.open .lid{ transform: rotateX(-115deg); }
+.ringbox .ring{
+  position:absolute; bottom: 18px; left:50%; transform: translateX(-50%) scale(0);
+  width: 34px; height:34px; border-radius:50%;
+  border: 6px solid var(--gold-light);
+  opacity:0;
+  transition: transform .5s .3s cubic-bezier(.4,1.8,.5,1), opacity .3s .3s ease;
+}
+.ringbox .ring::after{
+  content:''; position:absolute; top:-14px; left:50%; transform: translateX(-50%);
+  width:10px; height:10px; background: var(--ivory);
+  clip-path: polygon(50% 0, 100% 40%, 80% 100%, 20% 100%, 0 40%);
+}
+.ringbox.open .ring{ transform: translateX(-50%) scale(1); opacity:1; }
+
+.ringbox-hint{
+  font-size: .68rem; letter-spacing:.25em; text-transform: uppercase;
+  color: var(--gold-light); opacity:.65; margin-bottom: 2.6rem;
+}
+
+.proposal h2{
+  font-family: var(--display); font-weight:500;
+  font-size: clamp(2rem, 4.6vw, 3.2rem);
+  line-height: 1.25;
+  max-height:0; overflow:hidden; opacity:0;
+  transition: max-height 1s ease, opacity 1s ease, margin 1s ease;
+}
+.proposal.revealed h2{ max-height: 400px; opacity:1; margin-bottom: 1.2rem; }
+.proposal h2 em{ font-family: var(--script); font-style:normal; font-size: 1.2em; color: var(--gold-light); }
+
+.proposal .sub{
+  font-family: var(--display); font-style: italic; color: #e0c9b0;
+  max-height:0; overflow:hidden; opacity:0;
+  transition: max-height 1s .1s ease, opacity 1s .1s ease;
+}
+.proposal.revealed .sub{ max-height: 200px; opacity:1; margin-bottom: 2.2rem; }
+
+.answer-row{
+  max-height:0; overflow:hidden; opacity:0;
+  transition: max-height 1s .2s ease, opacity 1s .2s ease;
+  display:flex; gap: 1.4rem; justify-content:center; flex-wrap:wrap; position:relative;
+}
+.proposal.revealed .answer-row{ max-height: 140px; opacity:1; }
+
+.btn{
+  font-family: var(--body); font-weight:500; letter-spacing:.04em;
+  font-size: 1rem; padding: 1rem 2.6rem; border-radius: 2px; border:none; cursor:pointer;
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+.btn-yes{ background: var(--gold-light); color: var(--plum-deep); box-shadow: 0 16px 30px -10px rgba(0,0,0,.4); }
+.btn-yes:hover{ transform: translateY(-3px); }
+.btn-no{ background: transparent; color: #e0c9b0; border: 1px solid rgba(224,201,176,.4); }
+
+.celebration{
+  display:none; position:relative; z-index:2;
+}
+.celebration.show{ display:block; animation: rise 1s ease forwards; }
+@keyframes rise{ from{ opacity:0; transform: translateY(24px);} to{ opacity:1; transform: translateY(0);} }
+.celebration img{
+  width: 180px; height:180px; object-fit:cover; border-radius:50%;
+  border: 5px solid var(--gold-light);
+  box-shadow: 0 20px 40px -12px rgba(0,0,0,.5);
+  margin-bottom: 1.6rem;
+}
+.celebration h3{ font-family: var(--script); font-size: clamp(2.2rem, 5.5vw, 3.4rem); color: var(--gold-light); }
+.celebration p{ margin-top:.8rem; font-family: var(--display); font-style:italic; color: #e0c9b0; }
+
+footer{
+  text-align:center; padding: 3rem 1rem;
+  background: var(--plum-deep); color: var(--gold-light);
+  font-size: .75rem; letter-spacing:.12em; text-transform: uppercase;
+}
+
+@media (max-width: 860px){
+  .letter{ grid-template-columns: 1fr; padding: 6rem 8vw; }
+  .strings{ gap: 3rem 6vw; }
+  .medallion{ width: 130px; height:130px; }
+}
+
+@media (prefers-reduced-motion: reduce){
+  *{ animation-duration:.01ms !important; transition-duration:.01ms !important; }
+}
+button:focus-visible{ outline: 2px solid var(--gold); outline-offset: 3px; }
+</style>
+</head>
+<body>
+
+<!-- ENVELOPE GATE -->
+<div class="gate" id="gate">
+  <div class="envelope-wrap">
+    <p>a letter for Alisha</p>
+    <div class="envelope" id="envelope">
+      <div class="fold-l"></div>
+      <div class="fold-r"></div>
+      <div class="body"></div>
+      <div class="flap"></div>
+      <div class="seal">A&nbsp;K</div>
+    </div>
+    <p class="gate-hint">tap to open</p>
+  </div>
+</div>
+
+<!-- MAIN SITE -->
+<main id="main">
+
+  <section class="hero">
+    <div class="card">
+      <div class="hero-frame"><img src="images/alisha-2.jpg" alt="Alisha"></div>
+      <span class="eyebrow">an invitation, of sorts</span>
+      <h1>Alisha</h1>
+      <span class="amp">&amp; Kshitiz</span>
+      <p class="tag">You've read the letter. Now let me show you why I wrote it.</p>
+      <p class="scroll-hint">scroll on</p>
+    </div>
+  </section>
+
+  <section class="letter">
+    <figure class="letter-portrait">
+      <img src="images/kshitiz-1.jpg" alt="Kshitiz">
+      <figcaption>Kshitiz</figcaption>
+    </figure>
+    <div class="letter-body">
+      <span class="eyebrow">To Alisha,</span>
+      <h2>I've written a hundred versions of this in my head. None of them do it justice, so here's the plain one.</h2>
+      <p>You make hard days feel manageable and easy days feel like something worth celebrating. That's rarer than people admit, and I don't take it for granted.</p>
+      <p>I'm done treating "someday" like a placeholder. I know what I want, and it's a life built with you in it — properly, permanently, on purpose.</p>
+      <p class="sign">With everything I have,</p>
+    </div>
+  </section>
+
+  <section class="garland-section">
+    <span class="eyebrow">a few frames</span>
+    <h2>The Alisha I keep coming back to</h2>
+    <div class="strings">
+      <div class="string"><div class="medallion"><img src="images/alisha-1.jpg" alt="Alisha"></div><span>this look</span></div>
+      <div class="string"><div class="medallion"><img src="images/alisha-3.jpg" alt="Alisha"></div><span>caught mid-laugh</span></div>
+      <div class="string"><div class="medallion"><img src="images/kshitiz-1.jpg" alt="Kshitiz"></div><span>and this is me</span></div>
+    </div>
+  </section>
+
+  <section class="proposal" id="proposalSection">
+    <div class="proposal-inner" id="proposalInner">
+      <span class="eyebrow">before you go</span>
+      <div class="ringbox" id="ringbox">
+        <div class="lid"></div>
+        <div class="base"></div>
+        <div class="ring"></div>
+      </div>
+      <p class="ringbox-hint">tap the box</p>
+      <h2>Alisha, will you be my <em>life partner?</em></h2>
+      <p class="sub">Not just for the good days — for the ordinary ones too, for as long as I get to have them.</p>
+      <div class="answer-row">
+        <button class="btn btn-yes" id="yesBtn">Yes, always</button>
+        <button class="btn btn-no" id="noBtn">Give me a second</button>
+      </div>
+    </div>
+
+    <div class="celebration" id="celebration">
+      <img src="images/alisha-1.jpg" alt="Alisha">
+      <h3>She said yes.</h3>
+      <p>Alisha &amp; Kshitiz — from here, onward.</p>
+    </div>
+  </section>
+
+  <footer>Written and built with a very full heart, by Kshitiz</footer>
+</main>
+
+<script>
+// envelope gate
+const envelope = document.getElementById('envelope');
+const gate = document.getElementById('gate');
+const mainEl = document.getElementById('main');
+envelope.addEventListener('click', ()=>{
+  envelope.classList.add('open');
+  setTimeout(()=>{
+    gate.classList.add('opened');
+    mainEl.classList.add('show');
+    document.body.style.overflow = 'auto';
+  }, 750);
+});
+document.body.style.overflow = 'hidden';
+gate.addEventListener('transitionend', (e)=>{
+  if(gate.classList.contains('opened')) document.body.style.overflow = 'auto';
+});
+
+// ring box reveal
+const ringbox = document.getElementById('ringbox');
+const proposalSection = document.getElementById('proposalSection');
+ringbox.addEventListener('click', ()=>{
+  ringbox.classList.add('open');
+  proposalSection.classList.add('revealed');
+});
+
+// dodge / yes interaction
+const noBtn = document.getElementById('noBtn');
+const yesBtn = document.getElementById('yesBtn');
+const answerRow = document.querySelector('.answer-row');
+const proposalInner = document.getElementById('proposalInner');
+const celebration = document.getElementById('celebration');
+let dodgeCount = 0;
+
+function dodge(){
+  if(window.innerWidth < 700) return;
+  dodgeCount++;
+  const rowRect = answerRow.getBoundingClientRect();
+  const maxX = Math.max(60, rowRect.width - noBtn.offsetWidth - 20);
+  const x = Math.random()*maxX - maxX/2;
+  const y = Math.random()*50 - 25;
+  noBtn.style.transform = `translate(${x}px, ${y}px)`;
+  noBtn.textContent = dodgeCount > 4 ? "okay fine, yes?" : "hmm, still no?";
+}
+noBtn.addEventListener('pointerenter', dodge);
+noBtn.addEventListener('click', (e)=>{ e.preventDefault(); dodge(); });
+
+yesBtn.addEventListener('click', ()=>{
+  proposalInner.style.display = 'none';
+  celebration.classList.add('show');
+});
+</script>
+
+</body>
+</html>
